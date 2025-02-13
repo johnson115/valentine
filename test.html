@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        input, select, button {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .refresh-btn {
+            background: #ccc;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .slider-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .slider {
+            width: 60%;
+        }
+        .terms {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .terms label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .terms input {
+            width: 16px;
+            height: 16px;
+        }
+        .signup-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #ccc;
+            border: none;
+            cursor: not-allowed;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .signup-btn.active {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .signup-btn:hover:enabled {
+            background: #0056b3;
+        }
+        #password-error {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+        @media (max-width: 500px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Create Account</h2>
+
+        <!-- Username with auto-generate button -->
+        <label>Username</label>
+        <div class="input-group">
+            <input type="text" id="username" value="dd13cdbd-503e-44b3-890d-871fdffa52ee" readonly>
+            <button class="refresh-btn" onclick="generateUsername()">🔄</button>
+        </div>
+        <small>Here's your generated username, remember it!</small>
+
+        <!-- Password with validation -->
+        <label>Password</label>
+        <input type="password" id="password" oninput="validatePassword()">
+        <small id="password-error"></small>
+
+        <!-- Age Dropdown -->
+        <label>Age</label>
+        <select id="age"></select>
+
+    
+
+        <!-- Terms & Conditions -->
+        <div class="terms">
+            <label><input type="checkbox" id="disagree"> I don't agree to the <a href="#">terms and conditions</a></label>
+            <label><input type="checkbox" id="agree"> I agree to the <a href="#">terms and conditions</a></label>
+        </div>
+
+        <button class="signup-btn" id="signup-btn" disabled>Sign Up</button>
+    </div>
+
+    <script>
+        // توليد اسم مستخدم جديد
+        function generateUsername() {
+            let uuid = crypto.randomUUID();
+            document.getElementById("username").value = uuid;
+        }
+
+        // التحقق من كلمة المرور
+        function validatePassword() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let errorMsg = document.getElementById("password-error");
+
+            let usernameParts = username.split("-");
+            let containsPart = usernameParts.some(part => password.includes(part));
+
+            let minLength = password.length >= 8 && password.length <= 20;
+            let hasUpperCase = /[A-Z]/.test(password);
+            let hasNumber = /\d/.test(password);
+            let hasSpecialChar = /[\W_]/.test(password);
+
+            if (!minLength) {
+                errorMsg.textContent = "password cant contain parts of your username";
+                errorMsg.style.display = "block";
+            } else if (!hasUpperCase) {
+                errorMsg.textContent = "Password must contain at least one uppercase letter.";
+                errorMsg.style.display = "block";
+            } else if (!hasNumber) {
+                errorMsg.textContent = "Password must contain at least one number.";
+                errorMsg.style.display = "block";
+            } else if (!hasSpecialChar) {
+                errorMsg.textContent = "Password must contain at least one special character.";
+                errorMsg.style.display = "block";
+            } else if (containsPart) {
+                errorMsg.textContent = "Password cannot contain any part of the username.";
+                errorMsg.style.display = "block";
+            } else {
+                errorMsg.style.display = "none";
+            }
+            checkForm();
+        }
+
+        // تعبئة قائمة الأعمار
+        let ageDropdown = document.getElementById("age");
+        for (let i = 1; i <= 100; i++) {
+            let option = document.createElement("option");
+            option.value = `${i} years ${Math.floor(Math.random() * 12)} months ${Math.floor(Math.random() * 30)} days`;
+            option.textContent = option.value;
+            ageDropdown.appendChild(option);
+        }
+
+        // تحديث نص تذكر كلمة المرور
+        document.querySelector(".slider").addEventListener("input", function() {
+            document.getElementById("remember-label").textContent = this.value == 1 ? "Yes" : "No";
+        });
+
+        // تفعيل زر التسجيل بعد استيفاء الشروط
+        function checkForm() {
+            let password = document.getElementById("password").value;
+            let errorMsg = document.getElementById("password-error").textContent;
+            let age = document.getElementById("age").value;
+            let termsChecked = document.getElementById("agree").checked || document.getElementById("disagree").checked;
+            let signupBtn = document.getElementById("signup-btn");
+
+            if (password && !errorMsg && age && termsChecked) {
+                signupBtn.classList.add("active");
+                signupBtn.disabled = false;
+            } else {
+                signupBtn.classList.remove("active");
+                signupBtn.disabled = true;
+            }
+        }
+
+        document.querySelectorAll("input, select").forEach(element => {
+            element.addEventListener("input", checkForm);
+        });
+
+    </script>
+
+</body>
+</html>
