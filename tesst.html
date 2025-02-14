@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Fun</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+        }
+        h1 {
+            color: red;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .yes-btn, .no-btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .yes-btn {
+            background-color: green;
+            color: white;
+        }
+        .no-btn {
+            background-color: red;
+            color: white;
+            position: absolute;
+        }
+        .share {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my Valentine, <span id="crush-name">?</span></h1>
+        <input type="text" id="name-input" placeholder="Enter your crush's name">
+        <button onclick="setName()">Set Name</button>
+        <div class="buttons">
+            <button class="yes-btn" onclick="showLove()">Yes</button>
+            <button class="no-btn" onmouseover="moveNo()">No</button>
+        </div>
+        <div class="share">
+            <p>Share this with your loved ones:</p>
+            <button onclick="shareLink()">Share</button>
+        </div>
+    </div>
+    
+    <script>
+        function setName() {
+            let name = document.getElementById('name-input').value;
+            document.getElementById('crush-name').innerText = name || '?';
+        }
+        
+        function moveNo() {
+            let btn = document.querySelector('.no-btn');
+            btn.style.top = Math.random() * window.innerHeight + 'px';
+            btn.style.left = Math.random() * window.innerWidth + 'px';
+        }
+        
+        function showLove() {
+            alert('Yay! Love is in the air! ❤️');
+        }
+        
+        function shareLink() {
+            let url = window.location.href;
+            navigator.clipboard.writeText(url);
+            alert('Link copied! Share it with your Valentine!');
+        }
+    </script>
+</body>
+</html>

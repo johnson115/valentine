@@ -3,20 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
+    <meta name="description" content="A fun Valentine's Day page by Amen Allah Nammen! , play with the buttons, and share the love! and share your gift card on social media ">
+    <meta property="og:title" content="Will You Be My Valentine ?">
+    <meta property="og:description" content="A fun Valentine's Day page by Amen Allah Nammen! , play with the buttons, and share the love! and share the gift card on your instagram">
+    <meta property="og:image" content="./logo.jpg">
+    <meta property="og:url" content="https://valentineday.amennoomen.com">
+    <meta property="og:type" content="website">
+    <title>Valentine's Day Fun</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <h1 class="firsttitle">Heeeey ,</h1>
     <div class="container">
-        <h1>Will you be my Valentine?</h1>
-        <div class="buttons">
-            <button class="yes-button" onclick="handleYesClick()">Yes</button>
-            <button class="no-button" onclick="handleNoClick()">No</button>
+        <h1 class="title">Will you be my Valentine?</h1>
+        <div class="gif-container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute Valentine GIF" class="valentine-gif">
         </div>
-        <div class="gif_container">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+        <div class="buttons">
+            <button class="btn yes-btn" onclick="handleYesClick()">Yes</button>
+            <button class="btn no-btn" onclick="handleNoClick()">No</button>
         </div>
     </div>
+    <footer class="footer">
+        <p>&copy; 2024 Valentine's Day Special. Powered by <a href="https://www.anweblab.amennoomen.com" target="_blank">ANWEBLAB</a></p>
+        <p>Developed by <a href="https://amennoomen.com" target="_blank">Amen Allah Naamen</a></p>
+    </footer>
+    <div id="hearts-container"></div>
+    <canvas id="giftCardCanvas" style="display:none;"></canvas>
     <script src="script.js"></script>
 </body>
 </html>
+
